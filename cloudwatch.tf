@@ -20,7 +20,7 @@ resource "aws_cloudwatch_event_rule" "secretsmanager" {
       "PutSecretValue",
       "RestoreSecret",
       "UpdateSecret"
-    ]
+    ],
     "requestParameters": {
       "secretId": ["${var.prefix}*"]
     }
