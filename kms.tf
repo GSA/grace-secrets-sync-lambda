@@ -39,6 +39,7 @@ resource "aws_kms_key" "lambda" {
 }
 
 resource "aws_kms_alias" "lambda" {
+  count         = var.is_hub ? 1 : 0
   name          = "alias/${local.app_name}"
   target_key_id = aws_kms_key.lambda[0].key_id
 }
@@ -76,6 +77,7 @@ resource "aws_kms_key" "spoke_kms" {
 }
 
 resource "aws_kms_alias" "spoke_kms" {
+  count         = var.is_hub ? 0 : 1
   name          = "alias/${var.spoke_account_role_name}"
   target_key_id = aws_kms_key.spoke_kms[0].key_id
 }
