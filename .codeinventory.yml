@@ -1,0 +1,12 @@
+name: 'GSA/grace-ansible-lambda'
+description: 'Implement a decentralized methodology for execution of Ansible within a particular AWS account on ephemeral EC2 instances instantiated by a Lambda function'
+license: cc0-1.0
+openSourceProject: 1
+governmentWideReuseProject: 1
+tags:
+    - open-source
+    - opensource
+    - grace
+    - devsecops
+contact:
+    email: grace-staff@gsa.gov
