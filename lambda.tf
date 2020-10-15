@@ -28,6 +28,7 @@ resource "aws_lambda_function" "lambda" {
 
 # used to trigger lambda when prefixed secrets are updated
 resource "aws_lambda_permission" "cloudwatch_invoke" {
+  count         = var.is_hub ? 1 : 0
   action        = "lambda:InvokeFunction"
   function_name = aws_lambda_function.lambda[0].function_name
   principal     = "events.amazonaws.com"
