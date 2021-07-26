@@ -36,7 +36,7 @@ test: lint
 
 lint: go.mod dependencies
 	go mod tidy
-	golangci-lint run --timeout 5m ./...
+	./bin/golangci-lint run --timeout 5m ./...
 	gosec ./...
 
 go.mod:
@@ -47,7 +47,8 @@ endif
 dependencies: precommit $(GOLANGCILINT) $(GOSEC) $(GHR)
 
 $(GOLANGCILINT):
-	go get -u github.com/golangci/golangci-lint/cmd/golangci-lint@v1.22.2
+	# go get -u github.com/golangci/golangci-lint/cmd/golangci-lint@v1.22.2
+	curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | sh -s v1.22.2
 
 $(GOSEC):
 	go get -u github.com/securego/gosec/cmd/gosec
