@@ -13,4 +13,3 @@ release/
 .DS_Store
 */.DS_Store
 /.vscode
-lambda/bin/*

@@ -50,7 +50,7 @@ $(GOLANGCILINT):
 	go get github.com/golangci/golangci-lint/cmd/golangci-lint@v1.41.1
 
 $(GOSEC):
-	go get github.com/securego/gosec/cmd/gosec
+	go get github.com/securego/gosec/v2/cmd/gosec@v2.8.1
 
 $(GHR):
 	go get -u github.com/tcnksm/ghr
