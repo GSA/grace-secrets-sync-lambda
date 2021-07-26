@@ -38,18 +38,17 @@ linters:
     - depguard
     - dogsled
     - errcheck
+    - exportloopref
     - gocyclo
     - gofmt
     - goimports
-    - golint
     - gosec
     - gosimple
     - govet
     - ineffassign
-    - interfacer
     - misspell
     - nakedret
-    - scopelint
+    - revive
     - staticcheck
     - structcheck
     - stylecheck
