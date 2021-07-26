@@ -37,7 +37,7 @@ test: lint
 lint: go.mod dependencies
 	go mod tidy
 	./bin/golangci-lint run --timeout 5m ./...
-	gosec ./...
+	./bin/gosec ./...
 
 go.mod:
 ifeq (,$(wildcard go.mod))
@@ -51,7 +51,8 @@ $(GOLANGCILINT):
 	curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | sh -s v1.22.2
 
 $(GOSEC):
-	go get -u github.com/securego/gosec/cmd/gosec
+	# go get -u github.com/securego/gosec/cmd/gosec
+	curl -sfL https://raw.githubusercontent.com/securego/gosec/master/install.sh | sh -s v2.8.1
 
 $(GHR):
 	go get -u github.com/tcnksm/ghr
