@@ -3,11 +3,6 @@ variable "hub_account_id" {
   description = "(required) The ID of the hub account"
 }
 
-variable "hub_role_name" {
-  type        = string
-  description = "(required) The name of the role in the hub account"
-}
-
 variable "org_account_id" {
   type        = string
   description = "(required) The ID of the AWS Organizations account"
