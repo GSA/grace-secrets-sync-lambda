@@ -19,6 +19,8 @@ resource "aws_iam_role" "hub_role" {
   assume_role_policy = data.aws_iam_policy_document.hub_role.json
 }
 
+
+#tfsec:ignore:AWS099
 data "aws_iam_policy_document" "hub_policy" {
   count = var.is_hub ? 1 : 0
   statement {
@@ -106,6 +108,7 @@ resource "aws_iam_role" "spoke_role" {
   assume_role_policy = data.aws_iam_policy_document.spoke_role.json
 }
 
+#tfsec:ignore:AWS099
 data "aws_iam_policy_document" "spoke_policy" {
   statement {
     effect = "Allow"

@@ -1,3 +1,4 @@
+#tfsec:ignore:AWS099
 data "aws_iam_policy_document" "lambda" {
   count = var.is_hub ? 1 : 0
 
@@ -44,7 +45,7 @@ resource "aws_kms_alias" "lambda" {
   target_key_id = aws_kms_key.lambda[0].key_id
 }
 
-
+#tfsec:ignore:AWS099
 data "aws_iam_policy_document" "spoke_kms" {
   statement {
     effect = "Allow"
