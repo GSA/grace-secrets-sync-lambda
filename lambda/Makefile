@@ -5,7 +5,7 @@ GOLANGCILINT := $(GOBIN)/golangci-lint
 GOSEC := $(GOBIN)/gosec
 GHR := $(GOBIN)/ghr
 RELEASEDIR ?= ../release/
-ARTIFACT_NAME := grace-ansible-lambda
+ARTIFACT_NAME := grace-secrets-sync-lambda
 CIRCLE_PROJECT_REPONAME ?= $(ARTIFACT_NAME)
 export GO111MODULE=on
 
