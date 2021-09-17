@@ -5,17 +5,20 @@ variable "hub_account_id" {
 
 variable "org_account_id" {
   type        = string
-  description = "(required) The ID of the AWS Organizations account"
+  description = "(optional) The ID of the AWS Organizations account, required for hub"
+  default = ""
 }
 
 variable "org_account_role_name" {
   type        = string
-  description = "(required) The AWS Organizations role name"
+  description = "(optional) The AWS Organizations role name, required for hub"
+  default = ""
 }
 
 variable "org_account_ou_name" {
   type        = string
-  description = "(required) The AWS Organizations Organizational Unit Name to list the child accounts"
+  description = "(optional) The AWS Organizations Organizational Unit Name to list the child accounts, required for hub"
+  default = ""
 }
 
 variable "spoke_account_role_name" {
@@ -57,5 +60,5 @@ variable "is_hub" {
 variable "source_file" {
   type        = string
   description = "(optional) The full or relative path to zipped binary of lambda handler"
-  default     = "../release/grace-secrets-sync-lambda.zip"
+  default     = "release/grace-secrets-sync-lambda.zip"
 }

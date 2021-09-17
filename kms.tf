@@ -46,8 +46,6 @@ resource "aws_kms_alias" "lambda" {
 
 
 data "aws_iam_policy_document" "spoke_kms" {
-  count = var.is_hub ? 0 : 1
-
   statement {
     effect = "Allow"
     actions = [
@@ -60,24 +58,22 @@ data "aws_iam_policy_document" "spoke_kms" {
     resources = ["*"]
     principals {
       type        = "AWS"
-      identifiers = [aws_iam_role.spoke_role[0].arn]
+      identifiers = [aws_iam_role.spoke_role.arn]
     }
   }
 }
 
 
 resource "aws_kms_key" "spoke_kms" {
-  count                   = var.is_hub ? 0 : 1
   description             = "Key used for ${local.app_name}"
   deletion_window_in_days = 7
   enable_key_rotation     = true
-  policy                  = data.aws_iam_policy_document.spoke_kms[0].json
+  policy                  = data.aws_iam_policy_document.spoke_kms.json
 
-  depends_on = [aws_iam_role.spoke_role[0]]
+  depends_on = [aws_iam_role.spoke_role]
 }
 
 resource "aws_kms_alias" "spoke_kms" {
-  count         = var.is_hub ? 0 : 1
   name          = "alias/${var.spoke_account_role_name}"
-  target_key_id = aws_kms_key.spoke_kms[0].key_id
+  target_key_id = aws_kms_key.spoke_kms.key_id
 }

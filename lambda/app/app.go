@@ -79,7 +79,6 @@ func (a *App) Run() error {
 
 	// Assume role into Payer
 	// Enumerate accounts under OU
-	// Save list of account IDs (excluding ourself, using the stored account ID)
 	fmt.Printf("gathering account IDs from organizational unit: %s", a.cfg.OrgUnit)
 	err = a.getAccountList()
 	if err != nil {
@@ -89,10 +88,6 @@ func (a *App) Run() error {
 	var wg sync.WaitGroup
 	for _, account := range a.accounts {
 		account := account // make a copy of account ID to prevent mutation
-		if account == a.accountID {
-			// skip the hub account
-			continue
-		}
 		wg.Add(1)
 		go func() {
 			defer wg.Done()
@@ -133,10 +128,12 @@ func (a *App) syncSecrets(accountID string) error {
 
 	svc := secretsmanager.New(sess)
 	for _, src := range a.secrets {
+		found := false
 		for _, dst := range secrets {
 			if !strings.EqualFold(src.Name, a.cfg.Prefix+dst.Name) {
 				continue
 			}
+			found = true
 			if src.Value == dst.Value {
 				fmt.Printf("no update required for secret %s in account %s\n", dst.Name, accountID)
 				continue
@@ -152,6 +149,19 @@ func (a *App) syncSecrets(accountID string) error {
 			}
 			fmt.Printf("updated secret %s for account %s new version is %s\n",
 				dst.Name, accountID, aws.StringValue(out.VersionId))
+		}
+		if !found {
+			name := src.Name[len(a.cfg.Prefix):]
+			_, err := svc.CreateSecret(&secretsmanager.CreateSecretInput{
+				Name:         aws.String(name),
+				SecretString: aws.String(src.Value),
+				KmsKeyId:     aws.String(keyID),
+			})
+			if err != nil {
+				return fmt.Errorf("failed to create secret: %s -> %v", name, err)
+			}
+			fmt.Printf("created secret %s for account %s\n",
+				name, accountID)
 		}
 	}
 
