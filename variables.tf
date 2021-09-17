@@ -6,19 +6,19 @@ variable "hub_account_id" {
 variable "org_account_id" {
   type        = string
   description = "(optional) The ID of the AWS Organizations account, required for hub"
-  default = ""
+  default     = ""
 }
 
 variable "org_account_role_name" {
   type        = string
   description = "(optional) The AWS Organizations role name, required for hub"
-  default = ""
+  default     = ""
 }
 
 variable "org_account_ou_name" {
   type        = string
   description = "(optional) The AWS Organizations Organizational Unit Name to list the child accounts, required for hub"
-  default = ""
+  default     = ""
 }
 
 variable "spoke_account_role_name" {
