@@ -96,7 +96,7 @@ data "aws_iam_policy_document" "spoke_role" {
     principals {
       type = "AWS"
       identifiers = [
-        "arn:aws:iam::${var.hub_account_id}:role/${local.app_name}"
+        "arn:aws:iam::${var.hub_account_id}:role/${local.hub_app_name}"
       ]
     }
   }

@@ -3,6 +3,12 @@ variable "hub_account_id" {
   description = "(required) The ID of the hub account"
 }
 
+variable "hub_project_name" {
+  type        = string
+  description = "(required) The name of the hub project used by spoke"
+  default     = "iaas"
+}
+
 variable "org_account_id" {
   type        = string
   description = "(optional) The ID of the AWS Organizations account, required for hub"
