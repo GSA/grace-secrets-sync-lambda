@@ -60,11 +60,26 @@ data "aws_iam_policy_document" "spoke_kms" {
     principals {
       type = "AWS"
       identifiers = [
-        aws_iam_role.spoke_role.arn,
-        "arn:aws:iam::${local.account_id}:root"
+        aws_iam_role.spoke_role.arn
+
       ]
     }
   }
+  statement {
+    effect = "Allow"
+    actions = [
+      "kms:*"
+    ]
+    resources = ["*"]
+    principals {
+      type = "AWS"
+      identifiers = [
+        "arn:aws:iam::${local.account_id}:root"
+
+      ]
+    }
+  }
+
 }
 
 resource "aws_kms_key" "spoke_kms" {
