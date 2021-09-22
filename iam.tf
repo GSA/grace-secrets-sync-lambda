@@ -119,9 +119,7 @@ data "aws_iam_policy_document" "spoke_policy" {
       "kms:GenerateDataKey*",
       "kms:DescribeKey"
     ]
-    resources = [
-      aws_kms_key.spoke_kms.arn
-    ]
+    resources = ["*"]
   }
   # https://docs.aws.amazon.com/secretsmanager/latest/userguide/reference_iam-permissions.html
   # 
