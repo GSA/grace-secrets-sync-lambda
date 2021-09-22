@@ -58,12 +58,14 @@ data "aws_iam_policy_document" "spoke_kms" {
     ]
     resources = ["*"]
     principals {
-      type        = "AWS"
-      identifiers = [aws_iam_role.spoke_role.arn]
+      type = "AWS"
+      identifiers = [
+        aws_iam_role.spoke_role.arn,
+        "arn:aws:iam::${local.account_id}:root"
+      ]
     }
   }
 }
-
 
 resource "aws_kms_key" "spoke_kms" {
   description             = "Key used for ${local.app_name}"
