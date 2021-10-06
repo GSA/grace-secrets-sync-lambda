@@ -6,6 +6,7 @@ import (
 	"strings"
 	"sync"
 
+	"github.com/GSA/ciss-utils/aws/sm"
 	"github.com/aws/aws-sdk-go/aws"
 	"github.com/aws/aws-sdk-go/aws/client"
 	"github.com/aws/aws-sdk-go/aws/credentials/stscreds"
@@ -28,17 +29,12 @@ type Config struct {
 	KmsKeyAlias  string `env:"KMS_KEY_ALIAS"`
 }
 
-type secret struct {
-	ID    string
-	Name  string
-	Value string
-}
 
 // App is a wrapper for running Lambda
 type App struct {
 	cfg       *Config
 	sess      *session.Session
-	secrets   []secret
+	secrets   []sm.Secret
 	accounts  []string
 	accountID string
 	ouID      string
@@ -218,17 +214,17 @@ func filterSecretByKeyID(keyID string) secretMatcher {
 	}
 }
 
-func getSecrets(cfg client.ConfigProvider, matcher secretMatcher) ([]secret, error) {
+func getSecrets(cfg client.ConfigProvider, matcher secretMatcher) ([]sm.Secret, error) {
 	svc := secretsmanager.New(cfg)
 
-	var secrets []secret
+	var secrets []sm.Secret
 	err := svc.ListSecretsPages(&secretsmanager.ListSecretsInput{},
 		func(page *secretsmanager.ListSecretsOutput, lastPage bool) bool {
 			for _, s := range page.SecretList {
 				if !matcher(s) {
 					continue
 				}
-				secrets = append(secrets, secret{
+				secrets = append(secrets, sm.Secret{
 					ID:    aws.StringValue(s.ARN),
 					Name:  aws.StringValue(s.Name),
 					Value: "",
