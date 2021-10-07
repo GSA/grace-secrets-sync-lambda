@@ -29,7 +29,6 @@ type Config struct {
 	KmsKeyAlias  string `env:"KMS_KEY_ALIAS"`
 }
 
-
 // App is a wrapper for running Lambda
 type App struct {
 	cfg       *Config
